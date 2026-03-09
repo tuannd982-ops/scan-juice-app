@@ -1,98 +1,128 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useRouter } from "expo-router";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function Home() {
 
-export default function HomeScreen() {
+  const router = useRouter();
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={styles.container}>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {/* Header */}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.hello}>Hello 👋</Text>
+          <Text style={styles.name}>Christie Doe</Text>
+        </View>
+
+        <Image
+          source={{uri:"https://i.pravatar.cc/100"}}
+          style={styles.avatar}
+        />
+      </View>
+
+      <Text style={styles.title}>Your Insights</Text>
+
+      {/* Cards */}
+      <View style={styles.grid}>
+
+        <TouchableOpacity
+          style={styles.card}
+          onPress={()=>router.push("/scan")}
+        >
+          <Ionicons name="scan" size={30} color="#6C63FF" />
+          <Text style={styles.cardTitle}>Scan new</Text>
+          <Text style={styles.cardSub}>Scanned 483</Text>
+        </TouchableOpacity>
+
+        <View style={styles.card}>
+          <MaterialIcons name="warning" size={30} color="#FF8C42" />
+          <Text style={styles.cardTitle}>Counterfeits</Text>
+          <Text style={styles.cardSub}>Counterfeited 32</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Ionicons name="checkmark-circle" size={30} color="#2EC4B6" />
+          <Text style={styles.cardTitle}>Success</Text>
+          <Text style={styles.cardSub}>Checkouts 8</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Ionicons name="calendar" size={30} color="#4CC9F0" />
+          <Text style={styles.cardTitle}>Directory</Text>
+          <Text style={styles.cardSub}>History 26</Text>
+        </View>
+
+      </View>
+
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+
+  container:{
+    flex:1,
+    backgroundColor:"#F5F5F5",
+    padding:20
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  header:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    marginTop:40
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  hello:{
+    fontSize:26,
+    fontWeight:"bold"
   },
+
+  name:{
+    color:"gray",
+    marginTop:4
+  },
+
+  avatar:{
+    width:50,
+    height:50,
+    borderRadius:25
+  },
+
+  title:{
+    marginTop:30,
+    fontSize:18,
+    fontWeight:"bold"
+  },
+
+  grid:{
+    flexDirection:"row",
+    flexWrap:"wrap",
+    justifyContent:"space-between",
+    marginTop:20
+  },
+
+  card:{
+    width:"47%",
+    height:150,
+    backgroundColor:"#EAEAF2",
+    borderRadius:20,
+    padding:20,
+    marginBottom:15,
+    justifyContent:"center"
+  },
+
+  cardTitle:{
+    fontSize:16,
+    fontWeight:"bold",
+    marginTop:10
+  },
+
+  cardSub:{
+    color:"gray",
+    marginTop:4
+  }
+
 });
