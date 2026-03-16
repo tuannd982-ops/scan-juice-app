@@ -32,3 +32,8 @@ Các chức năng:
 ### Home Screen
 
 ![Home Screen](screenshots/home.png)
+### Payment Screen
+![Payment](screenshots/payment.png)
+
+### Success Screen
+![Success](screenshots/success.png)
